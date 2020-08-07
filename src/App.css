@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+.App-container {
+  position: absolute;
+  min-width: 100%;
+  height: 100%;
+  overflow: revert;
+  background-position: center;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
