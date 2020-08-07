@@ -1,0 +1,23 @@
+.login-container {
+    position: absolute;
+    min-width: 100%;
+    height: 100%;
+    overflow: revert;
+    background-position: center;
+}
+
+.login-card {
+    width: 75%;
+    min-width: 300px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.login-card-text {
+    background-color: white;
+    text-align: right;
+}
