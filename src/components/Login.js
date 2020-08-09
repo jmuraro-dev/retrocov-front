@@ -51,7 +51,7 @@ class Login extends Component {
                 <Card className={"login-card text-center"}>
                     <Card.Body>
                         <Card.Text className="login-card-text">
-                            <Button className="mr-3" href="#" variant="primary">Inscription <FaChevronRight /></Button>
+                            <Button className="mr-3" href="/register" variant="primary">Inscription <FaChevronRight /></Button>
                         </Card.Text>
                         <Card.Title className={"mb-4"}><h3>Connexion</h3></Card.Title>
                         <Form>

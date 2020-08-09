@@ -52,7 +52,7 @@ class Register extends Component {
                 <Card className={"register-card text-center"}>
                     <Card.Body>
                         <Card.Text className="register-card-text">
-                            <Button className="register-button mr-3" href="#" variant="primary"><FaChevronLeft /> Connexion</Button>
+                            <Button className="register-button mr-3" href="/" variant="primary"><FaChevronLeft /> Connexion</Button>
                         </Card.Text>
                         <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
                         <Form>
