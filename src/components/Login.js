@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import '../styles/login.css';
 
 import {Button, Card, Container, Form} from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 import {FaChevronRight} from "react-icons/fa";
 import {login} from "../api/Restaurant";
@@ -61,20 +61,17 @@ class Login extends Component {
     }
 
     render() {
-        const { name, redirect } = this.state;
+        const {name, redirect} = this.state;
 
         if (redirect) {
             const url = '/' + name + '/dashboard'
-            return <Redirect to={url} />
+            return <Redirect to={url}/>
         }
 
         return (
             <Container className="login-container">
                 <Card className={"login-card text-center"}>
                     <Card.Body>
-                        <Card.Text className="login-card-text">
-                            <Button className="mr-3" href="/register" variant="primary">Inscription <FaChevronRight /></Button>
-                        </Card.Text>
                         <Card.Title className={"mb-4"}><h3>Connexion</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
@@ -95,8 +92,12 @@ class Login extends Component {
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
                             </Form.Group>
-                            <Button className="mr-3" variant="primary"
-                                    onClick={() => this._handleLogin()}>Se connecter</Button>
+                            <Button className="mr-3 mt-2" variant="primary"
+                                    onClick={() => this._handleLogin()}>
+                                Se connecter
+                            </Button>
+                            <Button className="mr-3 mt-2" href="/register"
+                                    variant="outline-primary">Inscription <FaChevronRight/></Button>
                         </Form>
                     </Card.Body>
                 </Card>

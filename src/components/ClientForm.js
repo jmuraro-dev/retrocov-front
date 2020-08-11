@@ -6,7 +6,7 @@ import {Alert, Button, Card, Container, Form} from 'react-bootstrap';
 import {FaChevronLeft} from "react-icons/fa";
 import {create} from "../api/Restaurant";
 
-class Register extends Component {
+class ClientForm extends Component {
     constructor() {
         super();
 
@@ -85,7 +85,7 @@ class Register extends Component {
                             <Button className="register-button mr-3" href="/"
                                     variant="outline-primary"><FaChevronLeft/> Connexion</Button>
                         </Card.Text>
-                        <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
+                        <Card.Title className={"mb-4"}><h3>Formulaire Client</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
                                 <Form.Control
