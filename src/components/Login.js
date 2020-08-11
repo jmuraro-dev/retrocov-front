@@ -3,16 +3,20 @@ import React, {Component} from 'react';
 import '../styles/login.css';
 
 import {Button, Card, Container, Form} from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+
 import {FaChevronRight} from "react-icons/fa";
+import {login} from "../api/Restaurant";
 
 class Login extends Component {
     constructor() {
         super();
 
         this.state = {
-            name: "",
-            password: "",
-            error: ""
+            name: '',
+            password: '',
+            error: '',
+            redirect: false
         }
     }
 
@@ -41,11 +45,29 @@ class Login extends Component {
         this.setState({[name]: value})
     }
 
-    _handleLogin = () => {
-        console.log("login")
+    _handleLogin = async () => {
+        const {name, password} = this.state
+
+        if (name === '' || password === '') {
+            this.setState({error: 'Tous les champs sont obligatoire !'})
+        } else {
+            this.setState({error: ''})
+            const response = await login(this.state)
+
+            if (response.isLogged) {
+                this.setState({redirect: true})
+            }
+        }
     }
 
     render() {
+        const { name, redirect } = this.state;
+
+        if (redirect) {
+            const url = '/' + name + '/dashboard'
+            return <Redirect to={url} />
+        }
+
         return (
             <Container className="login-container">
                 <Card className={"login-card text-center"}>

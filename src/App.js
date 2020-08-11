@@ -11,6 +11,7 @@ import {
 
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
               </Route>
               <Route path="/register">
                   <Register />
+              </Route>
+              <Route path="/:restaurant/dashboard">
+                  <Dashboard />
               </Route>
           </Switch>
       </Router>

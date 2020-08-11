@@ -27,8 +27,8 @@ export async function create(restaurant) {
 }
 
 export async function login(restaurant) {
-    var password = sha1(sha1('Cov-' + restaurant.password) + '_Resto')
-
+    var password = sha1(sha1('Cov-' + restaurant.password) + '_Retro')
+    console.log(password);
     var init = {
         method: 'POST',
         headers: {
