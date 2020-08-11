@@ -1,31 +1,44 @@
 import React, {Component} from 'react';
-
+import {
+    useParams
+} from "react-router-dom";
 import '../styles/register.css';
-
 import {Alert, Button, Card, Container, Form} from 'react-bootstrap';
-import {FaChevronLeft} from "react-icons/fa";
-import {create} from "../api/Restaurant";
+import {create, getRestaurantByUrlName} from "../api/ClientTrace";
 
 class ClientForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            name: '',
-            address: '',
-            password: '',
-            passwordConf: '',
+            tableNumber: "",
+            firstname: "",
+            lastname: "",
+            phone: "",
+            postalCode: "",
+            restaurantUrlName: this.props.restaurantName,
+            restaurantName: "",
+            restaurantId: "",
             errors: {
-                name: '',
-                password: '',
-                passwordConf: '',
-                others: ''
+                tableNumber: "",
+                phone: "",
+                postalCode: "",
+                others:""
             }
         }
     }
 
     componentDidMount() {
         document.addEventListener("keydown", this._handleKeyDown)
+        // get the infos about the restaurant in the url
+        getRestaurantByUrlName(this.state.restaurantUrlName)
+            .then(restaurant => {
+                console.log(restaurant);
+                this.setState({
+                    restaurantName: restaurant.name,
+                    restaurantId: restaurant.id
+                });
+            })
     }
 
     componentWillUnmount() {
@@ -35,7 +48,7 @@ class ClientForm extends Component {
     _handleKeyDown = (event) => {
         switch (event.keyCode) {
             case 13:
-                this._handleRegister();
+                this._handleSubmit();
                 break;
             default:
                 break;
@@ -45,34 +58,19 @@ class ClientForm extends Component {
     _handleChange = event => {
         event.preventDefault();
         const {name, value} = event.target
-        let errors = this.state.errors;
-
-        switch (name) {
-            case 'password':
-                errors.password = value.length < 8 ? "Le mot de passe doit faire 8 caractères minimum !" : ''
-                break;
-            case 'passwordConf':
-                errors.passwordConf = value !== this.state.password ? "Les deux mots de passe ne sont pas identique !" : ''
-                break;
-        }
-
-
-        this.setState({errors, [name]: value})
+        this.setState({[name]: value})
     }
 
-    _handleRegister = async () => {
-        const {name, address, password, passwordConf, errors} = this.state
+    _handleSubmit = async () => {
+        const {tableNumber, firstname, lastname, phone, postalCode, restaurantId, errors} = this.state
 
-        if (name === '' || address === '' || password === '' || passwordConf === '') {
+        // verify that all the inputs are fullfiled, if not show an error .
+        if (tableNumber === '' || firstname === '' || lastname === '' || phone === '' || postalCode === '' || restaurantId === '') {
             errors.others = 'Tous les champs doivent être rempli !'
             this.setState({errors})
         } else {
-            if (password !== passwordConf) {
-                this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
-            } else {
-                this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
-                await create(this.state)
-            }
+            this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
+            await create(this.state)
         }
     }
 
@@ -80,64 +78,70 @@ class ClientForm extends Component {
         return (
             <Container className="register-container">
                 <Card className={"register-card text-center"}>
+                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
                     <Card.Body>
-                        <Card.Text className="register-card-text">
-                            <Button className="register-button mr-3" href="/"
-                                    variant="outline-primary"><FaChevronLeft/> Connexion</Button>
-                        </Card.Text>
-                        <Card.Title className={"mb-4"}><h3>Formulaire Client</h3></Card.Title>
+                        <Card.Title className={"mb-4"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
+                        </Card.Title>
                         <Form>
-                            <Form.Group controlId="formBasicName">
+                            <Form.Group controlId="formBasicTableNumber">
                                 <Form.Control
                                     size="lg"
-                                    name="name"
+                                    name="tableNumber"
                                     type="text"
-                                    value={this.state.name}
+                                    value={this.state.tableNumber}
                                     onChange={this._handleChange}
-                                    placeholder="Nom du restaurant"/>
+                                    placeholder="N° de table"/>
                             </Form.Group>
-                            {this.state.errors.name !== "" ? (
+                            {this.state.errors.tableNumber !== "" ? (
                                 <Alert variant="danger">
-                                    {this.state.errors.name}
+                                    {this.state.errors.tableNumber}
                                 </Alert>
                             ) : null}
 
-                            <Form.Group controlId="formBasicAddress">
+                            <Form.Group controlId="formBasicFirstname">
                                 <Form.Control
                                     size="lg"
-                                    name="address"
+                                    name="firstname"
                                     type="text"
-                                    value={this.state.address}
+                                    value={this.state.firstname}
                                     onChange={this._handleChange}
-                                    placeholder="Adresse du restaurant"/>
+                                    placeholder="Prénom"/>
                             </Form.Group>
-                            <Form.Group controlId="formBasicPassword">
+                            <Form.Group controlId="formBasiclastname">
                                 <Form.Control
                                     size="lg"
-                                    name="password"
-                                    type="password"
-                                    value={this.state.password}
+                                    name="lastname"
+                                    type="text"
+                                    value={this.state.lastname}
                                     onChange={this._handleChange}
-                                    placeholder="Mot de passe"/>
+                                    placeholder="Nom de famille"/>
                             </Form.Group>
-                            {this.state.errors.password !== "" ? (
+                            <Form.Group controlId="formBasicPhone">
+                                <Form.Control
+                                    size="lg"
+                                    name="phone"
+                                    type="tel"
+                                    value={this.state.phone}
+                                    onChange={this._handleChange}
+                                    placeholder="N° de téléphone"/>
+                            </Form.Group>
+                            {this.state.errors.phone !== "" ? (
                                 <Alert variant="danger">
-                                    {this.state.errors.password}
+                                    {this.state.errors.phone}
                                 </Alert>
                             ) : null}
-
-                            <Form.Group controlId="formBasicConfPassword">
+                            <Form.Group controlId="formBasicPostalCode">
                                 <Form.Control
                                     size="lg"
-                                    name="passwordConf"
-                                    type="password"
-                                    value={this.state.passwordConf}
+                                    name="postalCode"
+                                    type="number"
+                                    value={this.state.postalCode}
                                     onChange={this._handleChange}
-                                    placeholder="Confirmation du mot de passe"/>
+                                    placeholder="Code postal"/>
                             </Form.Group>
-                            {this.state.errors.passwordConf !== "" ? (
+                            {this.state.errors.postalCode !== "" ? (
                                 <Alert variant="danger">
-                                    {this.state.errors.passwordConf}
+                                    {this.state.errors.postalCode}
                                 </Alert>
                             ) : null}
 
@@ -147,8 +151,8 @@ class ClientForm extends Component {
                                 </Alert>
                             ) : null}
 
-                            <Button className="register-button mr-3" variant="primary"
-                                    onClick={() => this._handleRegister()}>S'inscrire</Button>
+                            <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
+                                    onClick={() => this._handleSubmit()}>Soumettre</Button>
                         </Form>
                     </Card.Body>
                 </Card>
@@ -157,4 +161,9 @@ class ClientForm extends Component {
     }
 }
 
-export default Register;
+export default () => {
+    const {restaurant} = useParams();
+    return (
+        <ClientForm restaurantName={restaurant}/>
+    )
+}

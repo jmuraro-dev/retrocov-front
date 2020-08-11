@@ -21,3 +21,20 @@
     background-color: white;
     text-align: left;
 }
+
+
+@media (max-width: 1000px) {
+    .card-logo {
+        margin: auto;
+        width: 80%;
+        margin-top: 40px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .card-logo {
+        margin: auto;
+        width: 30%;
+        margin-top: 40px;
+    }
+}

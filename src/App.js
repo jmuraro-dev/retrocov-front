@@ -12,6 +12,7 @@ import {
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import ClientForm from "./components/ClientForm";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
               </Route>
               <Route path="/:restaurant/dashboard">
                   <Dashboard />
+              </Route>
+              <Route path="/:restaurant">
+                  <ClientForm />
               </Route>
           </Switch>
       </Router>
