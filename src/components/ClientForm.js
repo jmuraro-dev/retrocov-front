@@ -69,7 +69,7 @@ class ClientForm extends Component {
             errors.others = 'Tous les champs doivent être rempli !'
             this.setState({errors})
         } else {
-            this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
+            this.setState({errors: {tableNumber: "", phone: "", postalCode: "", others: ""}})
             await create(this.state)
         }
     }
