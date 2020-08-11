@@ -15,6 +15,7 @@ class Login extends Component {
         this.state = {
             name: '',
             password: '',
+            urlName: '',
             error: '',
             redirect: false
         }
@@ -55,16 +56,16 @@ class Login extends Component {
             const response = await login(this.state)
 
             if (response.isLogged) {
-                this.setState({redirect: true})
+                this.setState({urlName: response.urlName, redirect: true})
             }
         }
     }
 
     render() {
-        const {name, redirect} = this.state;
+        const {urlName, redirect} = this.state;
 
         if (redirect) {
-            const url = '/' + name + '/dashboard'
+            const url = '/' + urlName + '/dashboard'
             return <Redirect to={url}/>
         }
 

@@ -12,7 +12,8 @@ export async function create(restaurant) {
         body: JSON.stringify({
             name: restaurant.name,
             address: restaurant.address,
-            password: password
+            password: password,
+            urlName: restaurant.name.toLowerCase().replace(/\s/g,'')
         })
     }
 
@@ -28,7 +29,7 @@ export async function create(restaurant) {
 
 export async function login(restaurant) {
     var password = sha1(sha1('Cov-' + restaurant.password) + '_Retro')
-    console.log(password);
+
     var init = {
         method: 'POST',
         headers: {
@@ -46,6 +47,24 @@ export async function login(restaurant) {
         return json
     } catch (err) {
         console.log('Fetch Error Login ------', err)
+        return null
+    }
+}
+
+export async function readByUrlName(urlName) {
+    var init = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/read_by_url_name?urlName=' + urlName, init)
+        const json = await response.json()
+        return json
+    } catch(err) {
+        console.log('Fetch Error readByUrlName ------', err)
         return null
     }
 }
