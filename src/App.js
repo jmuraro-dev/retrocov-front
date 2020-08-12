@@ -14,6 +14,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ClientForm from "./components/ClientForm";
+import Error404 from "./components/Error404";
 
 class App extends Component {
     constructor(props) {
@@ -64,6 +65,9 @@ class App extends Component {
                             <Redirect to='/' />
                         )
                     )} />
+                    <Route path="/404">
+                        <Error404 />
+                    </Route>
                     <Route path="/logout" render = {() => (
                         this.state.restaurant !== null ? this._logout() : (
                             <Redirect to={'/' + this.state.restaurant + '/dashboard'} />

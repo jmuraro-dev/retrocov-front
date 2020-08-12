@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {
-    useParams
+    useParams,
+    useHistory,
+    Redirect
 } from "react-router-dom";
 import '../styles/register.css';
-import {Alert, Button, Card, Container, Form} from 'react-bootstrap';
+import {Alert, Button, Card, Container, Form, Spinner} from 'react-bootstrap';
 import {create, getRestaurantByUrlName} from "../api/ClientTrace";
 
 class ClientForm extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             tableNumber: "",
             firstname: "",
@@ -17,28 +18,36 @@ class ClientForm extends Component {
             phone: "",
             postalCode: "",
             restaurantUrlName: this.props.restaurantName,
+            history: this.props.history,
             restaurantName: "",
             restaurantId: "",
+            isLoaded: false,
             success: false,
             errors: {
                 tableNumber: "",
                 phone: "",
                 postalCode: "",
+                error404: false,
                 others: ""
             }
         }
     }
 
     componentDidMount() {
+        //this.props.history.push("/first");
         document.addEventListener("keydown", this._handleKeyDown)
         // get the infos about the restaurant in the url
         getRestaurantByUrlName(this.state.restaurantUrlName)
-            .then(restaurant => {
-                console.log(restaurant);
-                this.setState({
-                    restaurantName: restaurant.name,
-                    restaurantId: restaurant.id
-                });
+            .then((result) => {
+                if (result.message != undefined) {
+                    this.setState({errors: {error404: true, tableNumber: "", phone: "", postalCode: "", others: ""}})
+                } else {
+                    this.setState({
+                        restaurantName: result.name,
+                        restaurantId: result.id,
+                        isLoaded: true
+                    });
+                }
             })
     }
 
@@ -79,108 +88,131 @@ class ClientForm extends Component {
     }
 
     render() {
-        return (
-            <Container className="register-container">
-                <Card className={"register-card text-center"}>
-                    <Card.Img className={"card-logo"} variant={"top"}
-                              src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
-                    <Card.Body style={{paddingBottom: "0px"}}>
-                        <Card.Title className={"mb-4"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
-                        </Card.Title>
-                        <Alert variant="info" style={{fontSize: "10pt"}}>
-                            Afin de proteger vos données personnelles, les informations renseignées sur ce formulaire
-                            seront automatiquement supprimées après 15 jours.
-                        </Alert>
-                        <Form>
-                            <Form.Group controlId="formBasicTableNumber">
-                                <Form.Control
-                                    size="lg"
-                                    name="tableNumber"
-                                    type="text"
-                                    value={this.state.tableNumber}
-                                    onChange={this._handleChange}
-                                    placeholder="N° de table"/>
-                            </Form.Group>
-                            {this.state.errors.tableNumber !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.tableNumber}
-                                </Alert>
-                            ) : null}
+        if (this.state.errors.error404) {
+            return <Redirect to='/404'/>;
+        } else if (this.state.isLoaded === false) {
+            return (
+                <Container style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    display: 'flex',
+                    marginTop: 20
+                }}>
+                    <Spinner animation="border" role="status" style={{color: '#0098ff'}}>
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </Container>
 
-                            <Form.Group controlId="formBasicFirstname">
-                                <Form.Control
-                                    size="lg"
-                                    name="firstname"
-                                    type="text"
-                                    value={this.state.firstname}
-                                    onChange={this._handleChange}
-                                    placeholder="Prénom"/>
-                            </Form.Group>
-                            <Form.Group controlId="formBasiclastname">
-                                <Form.Control
-                                    size="lg"
-                                    name="lastname"
-                                    type="text"
-                                    value={this.state.lastname}
-                                    onChange={this._handleChange}
-                                    placeholder="Nom de famille"/>
-                            </Form.Group>
-                            <Form.Group controlId="formBasicPhone">
-                                <Form.Control
-                                    size="lg"
-                                    name="phone"
-                                    type="tel"
-                                    value={this.state.phone}
-                                    onChange={this._handleChange}
-                                    placeholder="N° de téléphone"/>
-                            </Form.Group>
-                            {this.state.errors.phone !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.phone}
-                                </Alert>
-                            ) : null}
-                            <Form.Group controlId="formBasicPostalCode">
-                                <Form.Control
-                                    size="lg"
-                                    name="postalCode"
-                                    type="number"
-                                    value={this.state.postalCode}
-                                    onChange={this._handleChange}
-                                    placeholder="Code postal"/>
-                            </Form.Group>
-                            {this.state.errors.postalCode !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.postalCode}
-                                </Alert>
-                            ) : null}
+            )
+        } else {
+            return (
 
-                            {this.state.errors.others !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.others}
-                                </Alert>
-                            ) : null}
+                <Container className="register-container">
+                    <Card className={"register-card text-center"}>
+                        <Card.Img className={"card-logo"} variant={"top"}
+                                  src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
+                        <Card.Body style={{paddingBottom: "0px"}}>
+                            <Card.Title className={"mb-4"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
+                            </Card.Title>
+                            <Alert variant="info" style={{fontSize: "10pt"}}>
+                                Afin de proteger vos données personnelles, les informations renseignées sur ce
+                                formulaire
+                                seront automatiquement supprimées après 15 jours.
+                            </Alert>
+                            <Form>
+                                <Form.Group controlId="formBasicTableNumber">
+                                    <Form.Control
+                                        size="lg"
+                                        name="tableNumber"
+                                        type="text"
+                                        value={this.state.tableNumber}
+                                        onChange={this._handleChange}
+                                        placeholder="N° de table"/>
+                                </Form.Group>
+                                {this.state.errors.tableNumber !== "" ? (
+                                    <Alert variant="danger">
+                                        {this.state.errors.tableNumber}
+                                    </Alert>
+                                ) : null}
 
-                            {this.state.success == true ? (
-                                <Alert variant="success">
-                                    Vos informations ont bien été envoyées.
-                                </Alert>
-                            ) : <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
-                                        onClick={() => this._handleSubmit()}>Soumettre
-                            </Button>
-                            }
+                                <Form.Group controlId="formBasicFirstname">
+                                    <Form.Control
+                                        size="lg"
+                                        name="firstname"
+                                        type="text"
+                                        value={this.state.firstname}
+                                        onChange={this._handleChange}
+                                        placeholder="Prénom"/>
+                                </Form.Group>
+                                <Form.Group controlId="formBasiclastname">
+                                    <Form.Control
+                                        size="lg"
+                                        name="lastname"
+                                        type="text"
+                                        value={this.state.lastname}
+                                        onChange={this._handleChange}
+                                        placeholder="Nom de famille"/>
+                                </Form.Group>
+                                <Form.Group controlId="formBasicPhone">
+                                    <Form.Control
+                                        size="lg"
+                                        name="phone"
+                                        type="tel"
+                                        value={this.state.phone}
+                                        onChange={this._handleChange}
+                                        placeholder="N° de téléphone"/>
+                                </Form.Group>
+                                {this.state.errors.phone !== "" ? (
+                                    <Alert variant="danger">
+                                        {this.state.errors.phone}
+                                    </Alert>
+                                ) : null}
+                                <Form.Group controlId="formBasicPostalCode">
+                                    <Form.Control
+                                        size="lg"
+                                        name="postalCode"
+                                        type="number"
+                                        value={this.state.postalCode}
+                                        onChange={this._handleChange}
+                                        placeholder="Code postal"/>
+                                </Form.Group>
+                                {this.state.errors.postalCode !== "" ? (
+                                    <Alert variant="danger">
+                                        {this.state.errors.postalCode}
+                                    </Alert>
+                                ) : null}
 
-                        </Form>
-                        <Card.Footer className="text-muted card-foot">par <a href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
-                    </Card.Body>
-                </Card>
-            </Container>
-        );
+                                {this.state.errors.others !== "" ? (
+                                    <Alert variant="danger">
+                                        {this.state.errors.others}
+                                    </Alert>
+                                ) : null}
+
+                                {this.state.success == true ? (
+                                    <Alert variant="success">
+                                        Vos informations ont bien été envoyées.
+                                    </Alert>
+                                ) : <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
+                                            onClick={() => this._handleSubmit()}>Soumettre
+                                </Button>
+                                }
+
+                            </Form>
+                            <Card.Footer className="text-muted card-foot">par <a
+                                href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
+                        </Card.Body>
+                    </Card>
+                </Container>
+            );
+        }
     }
 }
 
 export default () => {
     const {restaurant} = useParams();
+    const {history} = useHistory();
     return (
-        <ClientForm restaurantName={restaurant}/>
+        <ClientForm restaurantName={restaurant} history={history}/>
     )
 }
