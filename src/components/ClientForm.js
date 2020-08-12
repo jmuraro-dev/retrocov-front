@@ -19,11 +19,12 @@ class ClientForm extends Component {
             restaurantUrlName: this.props.restaurantName,
             restaurantName: "",
             restaurantId: "",
+            success: false,
             errors: {
                 tableNumber: "",
                 phone: "",
                 postalCode: "",
-                others:""
+                others: ""
             }
         }
     }
@@ -66,11 +67,14 @@ class ClientForm extends Component {
 
         // verify that all the inputs are fullfiled, if not show an error .
         if (tableNumber === '' || firstname === '' || lastname === '' || phone === '' || postalCode === '' || restaurantId === '') {
-            errors.others = 'Tous les champs doivent être rempli !'
+            errors.others = 'Tous les champs doivent être remplis !'
             this.setState({errors})
         } else {
             this.setState({errors: {tableNumber: "", phone: "", postalCode: "", others: ""}})
-            await create(this.state)
+            create(this.state)
+                .then(() => {
+                    this.setState({success: true});
+                })
         }
     }
 
@@ -78,10 +82,15 @@ class ClientForm extends Component {
         return (
             <Container className="register-container">
                 <Card className={"register-card text-center"}>
-                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
-                    <Card.Body>
+                    <Card.Img className={"card-logo"} variant={"top"}
+                              src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
+                    <Card.Body style={{paddingBottom: "0px"}}>
                         <Card.Title className={"mb-4"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
                         </Card.Title>
+                        <Alert variant="info" style={{fontSize: "10pt"}}>
+                            Afin de proteger vos données personnelles, les informations renseignées sur ce formulaire
+                            seront automatiquement supprimées après 15 jours.
+                        </Alert>
                         <Form>
                             <Form.Group controlId="formBasicTableNumber">
                                 <Form.Control
@@ -151,9 +160,17 @@ class ClientForm extends Component {
                                 </Alert>
                             ) : null}
 
-                            <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
-                                    onClick={() => this._handleSubmit()}>Soumettre</Button>
+                            {this.state.success == true ? (
+                                <Alert variant="success">
+                                    Vos informations ont bien été envoyées.
+                                </Alert>
+                            ) : <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
+                                        onClick={() => this._handleSubmit()}>Soumettre
+                            </Button>
+                            }
+
                         </Form>
+                        <Card.Footer className="text-muted card-foot">par <a href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>

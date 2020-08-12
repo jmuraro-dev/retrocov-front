@@ -23,6 +23,14 @@
 }
 
 
+@media (max-width: 1600px) {
+    .card-logo {
+        margin: auto;
+        width: 30%;
+        margin-top: 40px;
+    }
+}
+
 @media (max-width: 1000px) {
     .card-logo {
         margin: auto;
@@ -31,10 +39,19 @@
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1600px) {
     .card-logo {
         margin: auto;
-        width: 30%;
+        width: 15%;
         margin-top: 40px;
     }
+}
+
+.card-foot {
+    font-size: 9pt;
+    text-align: right;
+    background-color: white;
+    margin-top: 10px;
+    border: none;
+    padding-right: 0px;
 }
