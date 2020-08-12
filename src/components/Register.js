@@ -80,11 +80,8 @@ class Register extends Component {
         return (
             <Container className="register-container">
                 <Card className={"register-card text-center"}>
+                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
                     <Card.Body>
-                        <Card.Text className="register-card-text">
-                            <Button className="register-button mr-3" href="/"
-                                    variant="outline-primary"><FaChevronLeft/> Connexion</Button>
-                        </Card.Text>
                         <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
@@ -146,6 +143,9 @@ class Register extends Component {
                                     {this.state.errors.others}
                                 </Alert>
                             ) : null}
+
+                            <Button className="register-button mr-3" href="/"
+                                    variant="outline-primary"><FaChevronLeft/> Connexion</Button>
 
                             <Button className="register-button mr-3" variant="primary"
                                     onClick={() => this._handleRegister()}>S'inscrire</Button>

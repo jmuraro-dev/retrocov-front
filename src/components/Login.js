@@ -72,6 +72,7 @@ class Login extends Component {
         return (
             <Container className="login-container">
                 <Card className={"login-card text-center"}>
+                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
                     <Card.Body>
                         <Card.Title className={"mb-4"}><h3>Connexion</h3></Card.Title>
                         <Form>

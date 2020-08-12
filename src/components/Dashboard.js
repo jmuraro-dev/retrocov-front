@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {
     useParams
 } from "react-router-dom";
-import {Card, Container} from "react-bootstrap";
+import {Card, Container, Nav, Navbar, Form, FormControl, Button} from "react-bootstrap";
 import {readByUrlName} from "../api/Restaurant";
 
 import QRCode from "react-qr-code";
@@ -32,6 +32,23 @@ class Dashboard extends Component {
     render() {
         return (
             <Container className="login-container">
+                <Navbar>
+                    <Navbar.Brand href="#">
+                        <img
+                            src="/RetroCov_icon.png"
+                            width="50"
+                            height="33"
+                            className="d-inline-block align-top"
+                            alt="React Bootstrap logo"
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                        <Navbar.Text>
+                            Se déconnecter
+                        </Navbar.Text>
+                    </Navbar.Collapse>
+                </Navbar>
                 <Card className={"login-card text-center"}>
                     <Card.Body>
                         <Card.Title className={"mb-4"}><h3>Hello {this.state.name}</h3></Card.Title>
