@@ -54,6 +54,8 @@ class Register extends Component {
             case 'passwordConf':
                 errors.passwordConf = value !== this.state.password ? "Les deux mots de passe ne sont pas identique !" : ''
                 break;
+            default:
+                break;
         }
 
 

@@ -3,10 +3,10 @@ import React, {Component} from 'react';
 import {
     useParams
 } from "react-router-dom";
-import {Card, Container, Nav, Navbar, Form, FormControl, Button} from "react-bootstrap";
+import {Button, Card, Container, Navbar} from "react-bootstrap";
 import {readByUrlName} from "../api/Restaurant";
 
-import QRCode from "react-qr-code";
+import QRCode from "qrcode.react";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -19,13 +19,23 @@ class Dashboard extends Component {
         }
     }
 
+    _downloadQR = () => {
+        const canvas = document.getElementById("qrcode");
+        const pngUrl = canvas.toDataURL("image/png");
+        let downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = this.state.urlName + "qrcode";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+
     componentDidMount() {
         this._getData()
     }
 
     _getData = async () => {
         const restaurant = await readByUrlName(this.state.urlName)
-        console.log(restaurant)
         await this.setState({name: restaurant.name, address: restaurant.address})
     }
 
@@ -35,9 +45,9 @@ class Dashboard extends Component {
                 <Navbar>
                     <Navbar.Brand href="#">
                         <img
-                            src="/RetroCov_icon.png"
-                            width="50"
-                            height="33"
+                            src="/RetroCov_Logo.png"
+                            width="125"
+                            height="30"
                             className="d-inline-block align-top"
                             alt="React Bootstrap logo"
                         />
@@ -45,14 +55,23 @@ class Dashboard extends Component {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Se déconnecter
+                            <a href="/logout">Se déconnecter</a>
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
                 <Card className={"login-card text-center"}>
                     <Card.Body>
-                        <Card.Title className={"mb-4"}><h3>Hello {this.state.name}</h3></Card.Title>
-                        <QRCode value={"https://www.retrocov.ch/" + this.state.urlName} />
+                        <Card.Title className={"mb-4"}><h3>{this.state.name}</h3></Card.Title>
+                        <Card.Text>
+                            <QRCode id="qrcode" value={"https://www.retrocov.ch/" + this.state.urlName} />
+                            <br/>
+                            <Button className="mr-3 mt-2" variant="primary"
+                                    onClick={() => this._downloadQR()}>
+                                Télécharger le QR Code
+                            </Button>
+                        </Card.Text>
+
+
                     </Card.Body>
                 </Card>
             </Container>

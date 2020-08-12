@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 
 import '../styles/login.css';
 
-import {Button, Card, Container, Form} from "react-bootstrap";
-import {Redirect} from "react-router-dom";
+import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 
 import {FaChevronRight} from "react-icons/fa";
 import {login} from "../api/Restaurant";
 
 class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             name: '',
@@ -46,6 +45,10 @@ class Login extends Component {
         this.setState({[name]: value})
     }
 
+    _updateLogged = () => {
+        this.props.update()
+    }
+
     _handleLogin = async () => {
         const {name, password} = this.state
 
@@ -56,19 +59,15 @@ class Login extends Component {
             const response = await login(this.state)
 
             if (response.isLogged) {
-                this.setState({urlName: response.urlName, redirect: true})
+                localStorage.setItem('restaurant', response.urlName)
+                this._updateLogged()
+            } else {
+                this.setState({error: "Nom d'utilisateur ou mot de passe incorrect !"})
             }
         }
     }
 
     render() {
-        const {urlName, redirect} = this.state;
-
-        if (redirect) {
-            const url = '/' + urlName + '/dashboard'
-            return <Redirect to={url}/>
-        }
-
         return (
             <Container className="login-container">
                 <Card className={"login-card text-center"}>
@@ -94,8 +93,15 @@ class Login extends Component {
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
                             </Form.Group>
+
+                            {this.state.error !== "" ? (
+                                <Alert variant="danger">
+                                    {this.state.error}
+                                </Alert>
+                            ) : null}
+
                             <Button className="mr-3 mt-2" variant="primary"
-                                    onClick={() => this._handleLogin()}>
+                                    onClick={() => this._handleLogin}>
                                 Se connecter
                             </Button>
                             <Button className="mr-3 mt-2" href="/register"
