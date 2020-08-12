@@ -7,8 +7,8 @@ import {FaChevronLeft} from "react-icons/fa";
 import {create} from "../api/Restaurant";
 
 class Register extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             name: '',
@@ -62,6 +62,10 @@ class Register extends Component {
         this.setState({errors, [name]: value})
     }
 
+    _updateLogged = () => {
+        this.props.update()
+    }
+
     _handleRegister = async () => {
         const {name, address, password, passwordConf, errors} = this.state
 
@@ -73,7 +77,9 @@ class Register extends Component {
                 this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
             } else {
                 this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
-                await create(this.state)
+                const response = await create(this.state)
+                sessionStorage.setItem('restaurant', response.urlName)
+                this._updateLogged()
             }
         }
     }
@@ -152,6 +158,8 @@ class Register extends Component {
                             <Button className="register-button mr-3" variant="primary"
                                     onClick={() => this._handleRegister()}>S'inscrire</Button>
                         </Form>
+                        <Card.Footer className="text-muted card-foot">par <a
+                            href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>

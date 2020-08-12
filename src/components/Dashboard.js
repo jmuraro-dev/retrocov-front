@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
 import {
+    Redirect,
     useParams
 } from "react-router-dom";
-import {Button, Card, Container, Navbar} from "react-bootstrap";
+import {Button, Card, Container, Navbar, Spinner} from "react-bootstrap";
 import {readByUrlName} from "../api/Restaurant";
 
 import QRCode from "qrcode.react";
@@ -15,7 +16,8 @@ class Dashboard extends Component {
         this.state = {
             name: '',
             address: '',
-            urlName: this.props.restaurantUrlName
+            urlName: this.props.restaurantUrlName,
+            loading: false
         }
     }
 
@@ -31,15 +33,37 @@ class Dashboard extends Component {
     };
 
     componentDidMount() {
-        this._getData()
+        {this.setState({loading: true})}
+
+        if (sessionStorage.getItem('restaurant') !== this.state.urlName) {
+            window.location.pathname = '/' + sessionStorage.getItem('restaurant') + '/dashboard'
+        } else {
+            this._getData()
+        }
     }
 
     _getData = async () => {
         const restaurant = await readByUrlName(this.state.urlName)
         await this.setState({name: restaurant.name, address: restaurant.address})
+        this.setState({loading: false})
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <Container style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    display: 'flex',
+                    marginTop: 20
+                }}>
+                    <Spinner animation="border" role="status" style={{color: '#0098ff'}}>
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </Container>
+            )
+        } else {
         return (
             <Container className="login-container">
                 <Navbar>
@@ -52,7 +76,7 @@ class Dashboard extends Component {
                             alt="React Bootstrap logo"
                         />
                     </Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
                             <a href="/logout">Se déconnecter</a>
@@ -63,7 +87,7 @@ class Dashboard extends Component {
                     <Card.Body>
                         <Card.Title className={"mb-4"}><h3>{this.state.name}</h3></Card.Title>
                         <Card.Text>
-                            <QRCode id="qrcode" value={"https://www.retrocov.ch/" + this.state.urlName} />
+                            <QRCode id="qrcode" value={"https://www.retrocov.ch/" + this.state.urlName}/>
                             <br/>
                             <Button className="mr-3 mt-2" variant="primary"
                                     onClick={() => this._downloadQR()}>
@@ -71,17 +95,19 @@ class Dashboard extends Component {
                             </Button>
                         </Card.Text>
 
-
+                        <Card.Footer className="text-muted card-foot">par <a
+                            href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>
         );
+        }
     }
 }
 
 export default () => {
     const {restaurant} = useParams();
     return (
-        <Dashboard restaurantUrlName={restaurant} />
+        <Dashboard restaurantUrlName={restaurant}/>
     )
 }

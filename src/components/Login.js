@@ -59,7 +59,7 @@ class Login extends Component {
             const response = await login(this.state)
 
             if (response.isLogged) {
-                localStorage.setItem('restaurant', response.urlName)
+                sessionStorage.setItem('restaurant', response.urlName)
                 this._updateLogged()
             } else {
                 this.setState({error: "Nom d'utilisateur ou mot de passe incorrect !"})
@@ -107,6 +107,8 @@ class Login extends Component {
                             <Button className="mr-3 mt-2" href="/register"
                                     variant="outline-primary">Inscription <FaChevronRight/></Button>
                         </Form>
+                        <Card.Footer className="text-muted card-foot">par <a
+                            href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>

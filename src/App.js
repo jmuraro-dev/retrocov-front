@@ -21,22 +21,22 @@ class App extends Component {
         super(props);
 
         this.state = {
-            restaurant: localStorage.getItem('restaurant'),
+            restaurant: sessionStorage.getItem('restaurant'),
         }
     }
 
     componentDidMount() {
-        this.setState({restaurant: localStorage.getItem('restaurant')})
+        this.setState({restaurant: sessionStorage.getItem('restaurant')})
     }
 
     updateLogged = () => {
         this.setState({
-            restaurant: localStorage.getItem('restaurant')
+            restaurant: sessionStorage.getItem('restaurant')
         })
     }
 
     _logout = () => {
-        localStorage.removeItem('restaurant');
+        sessionStorage.removeItem('restaurant');
         this.updateLogged()
     }
 
@@ -53,7 +53,7 @@ class App extends Component {
                     )} />
                     <Route path="/register" render={() => (
                         !this.state.restaurant ? (
-                            <Register update={this._updateLogged} />
+                            <Register update={this.updateLogged} />
                         ) : (
                             <Redirect to={'/' + this.state.restaurant + '/dashboard'} />
                         )
