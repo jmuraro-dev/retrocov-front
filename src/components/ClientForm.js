@@ -58,7 +58,8 @@ class ClientForm extends Component {
     _handleKeyDown = (event) => {
         switch (event.keyCode) {
             case 13:
-                this._handleSubmit();
+                if (!this.state.success)
+                    this._handleSubmit();
                 break;
             default:
                 break;
