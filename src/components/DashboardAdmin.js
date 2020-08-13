@@ -68,6 +68,7 @@ class DashboardAdmin extends Component {
                     <Card className={"login-card text-center"}>
                         <Card.Body style={{paddingBottom: "0px"}}>
                             <Card.Title className={"mb-4"}><h3>Outil d'administration</h3></Card.Title>
+                            {this.state.restaurants !== undefined ? (
                             <Table striped bordered responsive size="sm" style={{textAlign: "left"}}>
                                 <thead>
                                 <tr>
@@ -92,6 +93,11 @@ class DashboardAdmin extends Component {
                                 ))}
                                 </tbody>
                             </Table>
+                            ) : (
+                                <Card.Text>
+                                    Il n'y a actuellement aucun restaurant d'inscrits.
+                                </Card.Text>
+                            )}
                             <Card.Footer className="text-muted card-foot">par <a
                                 href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
                         </Card.Body>

@@ -95,7 +95,7 @@ class Dashboard extends Component {
                             <Card.Text>
                                 <QRCode id="qrcode" value={"https://www.retrocov.ch/" + this.state.urlName}/>
                                 <br/>
-                                <Button className="mt-2" variant="primary"
+                                <Button className="mt-2" variant="primary"  style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                         onClick={() => this._downloadQR()}>
                                     Télécharger le QR Code
                                 </Button>
