@@ -36,7 +36,6 @@ class App extends Component {
             restaurant: sessionStorage.getItem('restaurant'),
             admin: sessionStorage.getItem('admin') === "1" ? true : false
         })
-        console.log(this.state)
     }
 
     _logout = () => {
@@ -46,7 +45,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <Router>
                 <Switch>

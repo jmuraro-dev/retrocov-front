@@ -39,7 +39,7 @@ class ClientForm extends Component {
         // get the infos about the restaurant in the url
         getRestaurantByUrlName(this.state.restaurantUrlName)
             .then((result) => {
-                if (result.message != undefined) {
+                if (result.message !== undefined) {
                     this.setState({errors: {error404: true, tableNumber: "", phone: "", postalCode: "", others: ""}})
                 } else {
                     this.setState({
@@ -190,7 +190,7 @@ class ClientForm extends Component {
                                     </Alert>
                                 ) : null}
 
-                                {this.state.success == true ? (
+                                {this.state.success === true ? (
                                     <Alert variant="success">
                                         Vos informations ont bien été envoyées.
                                     </Alert>

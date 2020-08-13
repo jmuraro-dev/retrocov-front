@@ -6,10 +6,6 @@ import {FaChevronLeft} from "react-icons/fa";
 
 
 class Error404 extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Container className="register-container">

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {
     useParams
 } from "react-router-dom";
-import {Button, Card, Container, Navbar, Spinner, Table} from "react-bootstrap";
+import {Button, Card, Container, Navbar, Spinner} from "react-bootstrap";
 import {readByUrlName, getAllRestaurants} from "../api/Restaurant";
 
 import '../styles/general.css'
