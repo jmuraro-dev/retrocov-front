@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import '../styles/register.css';
+import '../styles/general.css';
 
 import {Alert, Button, Card, Container, Form} from 'react-bootstrap';
 import {FaChevronLeft} from "react-icons/fa";
@@ -89,7 +90,7 @@ class Register extends Component {
             <Container className="register-container">
                 <Card className={"register-card text-center"}>
                     <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
-                    <Card.Body>
+                    <Card.Body style={{paddingBottom: "0px"}}>
                         <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
@@ -124,12 +125,12 @@ class Register extends Component {
                                     value={this.state.password}
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
+                                {this.state.errors.password !== "" ? (
+                                    <Form.Text id="passwordHelpBlock" className={"form-password-conf"} muted>
+                                        {this.state.errors.password}
+                                    </Form.Text>
+                                ) : null}
                             </Form.Group>
-                            {this.state.errors.password !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.password}
-                                </Alert>
-                            ) : null}
 
                             <Form.Group controlId="formBasicConfPassword">
                                 <Form.Control
@@ -139,12 +140,12 @@ class Register extends Component {
                                     value={this.state.passwordConf}
                                     onChange={this._handleChange}
                                     placeholder="Confirmation du mot de passe"/>
+                                {this.state.errors.passwordConf !== "" ? (
+                                    <Form.Text id="passwordHelpBlock" className={"form-password-conf"} muted>
+                                        {this.state.errors.passwordConf}
+                                    </Form.Text>
+                                ) : null}
                             </Form.Group>
-                            {this.state.errors.passwordConf !== "" ? (
-                                <Alert variant="danger">
-                                    {this.state.errors.passwordConf}
-                                </Alert>
-                            ) : null}
 
                             {this.state.errors.others !== "" ? (
                                 <Alert variant="danger">
@@ -152,14 +153,14 @@ class Register extends Component {
                                 </Alert>
                             ) : null}
 
-                            <Button className="register-button mr-3" href="/"
+                            <Button className="register-button btn-connect mr-3" href="/"
                                     variant="outline-primary"><FaChevronLeft/> Connexion</Button>
 
-                            <Button className="register-button mr-3" variant="primary"
+                            <Button className="register-button mr-3" variant="primary" style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                     onClick={() => this._handleRegister()}>S'inscrire</Button>
                         </Form>
                         <Card.Footer className="text-muted card-foot">par <a
-                            href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
+                            href={"https://www.infomaniak.com"} className='infomaniak-link'>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>

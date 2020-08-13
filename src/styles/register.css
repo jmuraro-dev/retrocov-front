@@ -22,6 +22,22 @@
     text-align: left;
 }
 
+.form-password-conf {
+    text-align: left;
+    color: #741E26!important;
+}
+
+.btn-connect {
+    color: #1A98FF!important;
+    border-color: #1A98FF!important;
+}
+
+.btn-connect:hover {
+    background-color: #1A98FF!important;
+    border-color: #1A98FF!important;
+    color: white!important;
+}
+
 
 @media (max-width: 1600px) {
     .card-logo {

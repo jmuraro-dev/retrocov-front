@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import '../styles/login.css';
+import '../styles/general.css';
 
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 
@@ -60,6 +61,7 @@ class Login extends Component {
 
             if (response.isLogged) {
                 sessionStorage.setItem('restaurant', response.urlName)
+                sessionStorage.setItem('admin', response.isAdmin)
                 this._updateLogged()
             } else {
                 this.setState({error: "Nom d'utilisateur ou mot de passe incorrect !"})
@@ -72,7 +74,7 @@ class Login extends Component {
             <Container className="login-container">
                 <Card className={"login-card text-center"}>
                     <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
-                    <Card.Body>
+                    <Card.Body style={{paddingBottom: "0px"}}>
                         <Card.Title className={"mb-4"}><h3>Connexion</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
@@ -100,15 +102,15 @@ class Login extends Component {
                                 </Alert>
                             ) : null}
 
-                            <Button className="mr-3 mt-2" variant="primary"
-                                    onClick={() => this._handleLogin}>
+                            <Button className="mr-3 mt-2" variant="primary" style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
+                                    onClick={() => this._handleLogin()}>
                                 Se connecter
                             </Button>
-                            <Button className="mr-3 mt-2" href="/register"
+                            <Button className="mr-3 mt-2 btn-connect" href="/register"
                                     variant="outline-primary">Inscription <FaChevronRight/></Button>
                         </Form>
                         <Card.Footer className="text-muted card-foot">par <a
-                            href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
+                            href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>
             </Container>

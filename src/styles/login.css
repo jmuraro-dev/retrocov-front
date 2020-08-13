@@ -21,3 +21,14 @@
     background-color: white;
     text-align: right;
 }
+
+.btn-connect {
+    color: #1A98FF!important;
+    border-color: #1A98FF!important;
+}
+
+.btn-connect:hover {
+    background-color: #1A98FF!important;
+    border-color: #1A98FF!important;
+    color: white!important;
+}

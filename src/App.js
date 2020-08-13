@@ -15,6 +15,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ClientForm from "./components/ClientForm";
 import Error404 from "./components/Error404";
+import DashboardAdmin from "./components/DashboardAdmin";
 
 class App extends Component {
     constructor(props) {
@@ -22,25 +23,30 @@ class App extends Component {
 
         this.state = {
             restaurant: sessionStorage.getItem('restaurant'),
+            admin: sessionStorage.getItem('admin') === "1" ? true : false
         }
     }
 
     componentDidMount() {
-        this.setState({restaurant: sessionStorage.getItem('restaurant')})
+        this.setState({restaurant: sessionStorage.getItem('restaurant'), admin: sessionStorage.getItem('admin') === "1" ? true : false})
     }
 
     updateLogged = () => {
         this.setState({
-            restaurant: sessionStorage.getItem('restaurant')
+            restaurant: sessionStorage.getItem('restaurant'),
+            admin: sessionStorage.getItem('admin') === "1" ? true : false
         })
+        console.log(this.state)
     }
 
     _logout = () => {
         sessionStorage.removeItem('restaurant');
+        sessionStorage.removeItem('admin')
         this.updateLogged()
     }
 
     render() {
+        console.log(this.state)
         return (
             <Router>
                 <Switch>
@@ -59,8 +65,12 @@ class App extends Component {
                         )
                     )} />
                     <Route path="/:restaurant/dashboard" render={() => (
-                        this.state.restaurant ? (
-                            <Dashboard />
+                        this.state.restaurant ?  (
+                            this.state.admin ? (
+                                <DashboardAdmin />
+                            ) : (
+                                <Dashboard />
+                            )
                         ) : (
                             <Redirect to='/' />
                         )
