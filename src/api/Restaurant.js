@@ -85,3 +85,43 @@ function createUrlName(restaurantName) {
     r = r.replace(new RegExp(/\W/g),"");
     return r.replace(/\s/g,'');
 }
+
+export async function getAllRestaurants() {
+    var init = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/read_all.php', init)
+        const json = await response.json()
+        return json["records"];
+    } catch (err) {
+        console.log('Fetch Error getAllRestaurant ------', err)
+        return null
+    }
+}
+
+export async function deleteRestaurantById(id) {
+
+    var init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/delete.php', init)
+        const json = await response.json();
+        return json
+    } catch (err) {
+        console.log('Fetch Error Login ------', err)
+        return null
+    }
+}
