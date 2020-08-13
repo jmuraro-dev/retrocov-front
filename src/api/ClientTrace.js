@@ -26,22 +26,3 @@ export async function create(clientTrace) {
         return null;
     }
 }
-
-export async function getRestaurantByUrlName(urlName) {
-
-    var init = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }
-
-    try {
-        const response = await fetch(config.API_URL + 'restaurant/read_by_url_name?urlName='+urlName, init)
-        const json = await response.json()
-        return json
-    } catch (err) {
-        console.log('Fetch Error Register ------', err);
-        return null;
-    }
-}

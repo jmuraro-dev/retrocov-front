@@ -6,7 +6,8 @@ import {
 } from "react-router-dom";
 import '../styles/register.css';
 import {Alert, Button, Card, Container, Form, Spinner} from 'react-bootstrap';
-import {create, getRestaurantByUrlName} from "../api/ClientTrace";
+import {create} from "../api/ClientTrace";
+import {readByUrlName} from "../api/Restaurant";
 
 class ClientForm extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class ClientForm extends Component {
         //this.props.history.push("/first");
         document.addEventListener("keydown", this._handleKeyDown)
         // get the infos about the restaurant in the url
-        getRestaurantByUrlName(this.state.restaurantUrlName)
+        readByUrlName(this.state.restaurantUrlName)
             .then((result) => {
                 if (result.message !== undefined) {
                     this.setState({errors: {error404: true, tableNumber: "", phone: "", postalCode: "", others: ""}})
