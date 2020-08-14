@@ -71,3 +71,8 @@
     border: none;
     padding-right: 0px;
 }
+
+.clientform-title h3 {
+    font-size : 17pt;
+    color: #1d1f2b;
+}

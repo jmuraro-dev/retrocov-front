@@ -14,6 +14,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ClientForm from "./components/ClientForm";
+import ClientFormSuccess from "./components/ClientFormSuccess";
 import Error404 from "./components/Error404";
 import DashboardAdmin from "./components/DashboardAdmin";
 
@@ -73,6 +74,9 @@ class App extends Component {
                             <Redirect to='/' />
                         )
                     )} />
+                    <Route path="/:restaurant/success">
+                        <ClientFormSuccess />
+                    </Route>
                     <Route path="/404">
                         <Error404 />
                     </Route>

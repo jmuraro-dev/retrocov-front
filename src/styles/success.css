@@ -1,0 +1,21 @@
+.success-card {
+    width: 50%;
+    background-color: #d4edda;
+}
+
+.success-card .card-foot {
+    background-color: #d4edda;
+}
+
+.success-title {
+    font-size : 22pt;
+    color: #1d1f2b;
+}
+
+.clientform-card .form-control {
+    font-size: 1em;
+}
+
+.clientform-card .form-group {
+    margin-bottom: 0.5rem;
+}

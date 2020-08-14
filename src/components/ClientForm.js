@@ -111,13 +111,13 @@ class ClientForm extends Component {
             return (
 
                 <Container className="register-container">
-                    <Card className={"register-card text-center"}>
+                    <Card className={"register-card text-center clientform-card"}>
                         <Card.Img className={"card-logo"} variant={"top"}
                                   src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
                         <Card.Body style={{paddingBottom: "0px"}}>
-                            <Card.Title className={"mb-4"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
+                            <Card.Title className={"mb-4 clientform-title"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
                             </Card.Title>
-                            <Alert variant="info" style={{fontSize: "10pt"}}>
+                            <Alert variant="info" style={{fontSize: "9pt"}}>
                                 Afin de proteger vos données personnelles, les informations renseignées sur ce
                                 formulaire
                                 seront automatiquement supprimées après 15 jours.
@@ -192,16 +192,15 @@ class ClientForm extends Component {
                                 ) : null}
 
                                 {this.state.success === true ? (
-                                    <Alert variant="success">
-                                        Vos informations ont bien été envoyées.
-                                    </Alert>
-                                ) : <Button className="register-button mr-3 mt-2" size="lg" variant="primary"
+                                    <Redirect to={"/"+ this.state.restaurantUrlName + "/success"}/>
+                                ) : <Button className="register-button mr-3 mt-2" size="lg"
+                                            variant="primary" style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                             onClick={() => this._handleSubmit()}>Soumettre
                                 </Button>
                                 }
 
                             </Form>
-                            <Card.Footer className="text-muted card-foot">par <a
+                            <Card.Footer className="text-muted card-foot">validé par <a
                                 href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
                         </Card.Body>
                     </Card>

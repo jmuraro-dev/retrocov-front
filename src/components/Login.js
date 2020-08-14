@@ -3,10 +3,11 @@ import React, {Component} from 'react';
 import '../styles/login.css';
 import '../styles/general.css';
 
-import {Alert, Button, Card, Container, Form} from "react-bootstrap";
+import {Alert, Button, Card, Container, Form, InputGroup} from "react-bootstrap";
 
 import {FaChevronRight} from "react-icons/fa";
 import {login} from "../api/Restaurant";
+import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
 
 class Login extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class Login extends Component {
             password: '',
             urlName: '',
             error: '',
-            redirect: false
+            redirect: false,
+            passwordVisible: false
         }
     }
 
@@ -29,6 +31,9 @@ class Login extends Component {
         document.removeEventListener("keydown", this._handleKeyDown)
     }
 
+    _handlePasswordVisible = () => {
+        this.setState({passwordVisible : !this.state.passwordVisible})
+    }
 
     _handleKeyDown = (event) => {
         switch (event.keyCode) {
@@ -73,7 +78,8 @@ class Login extends Component {
         return (
             <Container className="login-container">
                 <Card className={"login-card text-center"}>
-                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
+                    <Card.Img className={"card-logo"} variant={"top"}
+                              src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
                     <Card.Body style={{paddingBottom: "0px"}}>
                         <Card.Title className={"mb-4"}><h3>Connexion</h3></Card.Title>
                         <Form>
@@ -84,32 +90,38 @@ class Login extends Component {
                                     type="text"
                                     value={this.state.name}
                                     onChange={this._handleChange}
-                                    placeholder="Nom du restaurant"/>
+                                    placeholder="Nom de l'établissement"/>
                             </Form.Group>
-                            <Form.Group controlId="formBasicPassword">
+                            <InputGroup controlId="formBasicPassword">
                                 <Form.Control
                                     size="lg"
                                     name="password"
-                                    type="password"
+                                    type={this.state.passwordVisible ? "text" : "password"}
                                     value={this.state.password}
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
-                            </Form.Group>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text onClick={() => this._handlePasswordVisible()} style={{padding:"10px"}}>
+                                        {this.state.passwordVisible ? <AiOutlineEyeInvisible/> : <AiOutlineEye/>}
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
+                            </InputGroup>
 
                             {this.state.error !== "" ? (
-                                <Alert variant="danger">
+                                <Alert className={"mt-3"} variant="danger">
                                     {this.state.error}
                                 </Alert>
                             ) : null}
 
-                            <Button className="mr-3 mt-2" variant="primary" style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
+                            <Button className="mr-3 mt-2" variant="primary"
+                                    style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                     onClick={() => this._handleLogin()}>
                                 Se connecter
                             </Button>
                             <Button className="mr-3 mt-2 btn-connect" href="/register"
                                     variant="outline-primary">Inscription <FaChevronRight/></Button>
                         </Form>
-                        <Card.Footer className="text-muted card-foot">par <a
+                        <Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>

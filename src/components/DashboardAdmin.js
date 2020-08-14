@@ -98,7 +98,7 @@ class DashboardAdmin extends Component {
                                     Il n'y a actuellement aucun restaurant d'inscrits.
                                 </Card.Text>
                             )}
-                            <Card.Footer className="text-muted card-foot">par <a
+                            <Card.Footer className="text-muted card-foot">validé par <a
                                 href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
                         </Card.Body>
                     </Card>

@@ -3,9 +3,10 @@ import React, {Component} from 'react';
 import '../styles/register.css';
 import '../styles/general.css';
 
-import {Alert, Button, Card, Container, Form} from 'react-bootstrap';
+import {Alert, Button, Card, Container, Form, InputGroup} from 'react-bootstrap';
 import {FaChevronLeft} from "react-icons/fa";
 import {create} from "../api/Restaurant";
+import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
 
 class Register extends Component {
     constructor(props) {
@@ -16,6 +17,8 @@ class Register extends Component {
             address: '',
             password: '',
             passwordConf: '',
+            passwordVisible: false,
+            passwordConfVisible: false,
             errors: {
                 name: '',
                 password: '',
@@ -31,6 +34,14 @@ class Register extends Component {
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this._handleKeyDown)
+    }
+
+    _handlePasswordVisible = () => {
+        this.setState({passwordVisible: !this.state.passwordVisible})
+    }
+
+    _handlePasswordConfVisible = () => {
+        this.setState({passwordConfVisible: !this.state.passwordConfVisible})
     }
 
     _handleKeyDown = (event) => {
@@ -89,7 +100,8 @@ class Register extends Component {
         return (
             <Container className="register-container">
                 <Card className={"register-card text-center"}>
-                    <Card.Img className={"card-logo"} variant={"top"} src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo" />
+                    <Card.Img className={"card-logo"} variant={"top"}
+                              src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
                     <Card.Body style={{paddingBottom: "0px"}}>
                         <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
                         <Form>
@@ -100,7 +112,7 @@ class Register extends Component {
                                     type="text"
                                     value={this.state.name}
                                     onChange={this._handleChange}
-                                    placeholder="Nom du restaurant"/>
+                                    placeholder="Nom de l'établissement"/>
                             </Form.Group>
                             {this.state.errors.name !== "" ? (
                                 <Alert variant="danger">
@@ -115,51 +127,64 @@ class Register extends Component {
                                     type="text"
                                     value={this.state.address}
                                     onChange={this._handleChange}
-                                    placeholder="Adresse du restaurant"/>
+                                    placeholder="Adresse de l'établissement"/>
                             </Form.Group>
-                            <Form.Group controlId="formBasicPassword">
+                            <InputGroup controlId="formBasicPassword">
                                 <Form.Control
                                     size="lg"
                                     name="password"
-                                    type="password"
+                                    type={this.state.passwordVisible ? "text" : "password"}
                                     value={this.state.password}
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
-                                {this.state.errors.password !== "" ? (
-                                    <Form.Text id="passwordHelpBlock" className={"form-password-conf"} muted>
-                                        {this.state.errors.password}
-                                    </Form.Text>
-                                ) : null}
-                            </Form.Group>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text onClick={() => this._handlePasswordVisible()}
+                                                     style={{padding: "10px"}}>
+                                        {this.state.passwordVisible ? <AiOutlineEyeInvisible/> : <AiOutlineEye/>}
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
+                            </InputGroup>
+                            {this.state.errors.password !== "" ? (
+                                <Form.Text id="passwordHelpBlock" className={"form-password-conf mb-3"} muted>
+                                    {this.state.errors.password}
+                                </Form.Text>
+                            ) : null}
 
-                            <Form.Group controlId="formBasicConfPassword">
+                            <InputGroup controlId="formBasicConfPassword" className={"mt-3"}>
                                 <Form.Control
                                     size="lg"
                                     name="passwordConf"
-                                    type="password"
+                                    type={this.state.passwordConfVisible ? "text" : "password"}
                                     value={this.state.passwordConf}
                                     onChange={this._handleChange}
                                     placeholder="Confirmation du mot de passe"/>
-                                {this.state.errors.passwordConf !== "" ? (
-                                    <Form.Text id="passwordHelpBlock" className={"form-password-conf"} muted>
-                                        {this.state.errors.passwordConf}
-                                    </Form.Text>
-                                ) : null}
-                            </Form.Group>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text onClick={() => this._handlePasswordConfVisible()}
+                                                     style={{padding: "10px"}}>
+                                        {this.state.passwordConfVisible ? <AiOutlineEyeInvisible/> : <AiOutlineEye/>}
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
+                            </InputGroup>
+                            {this.state.errors.passwordConf !== "" ? (
+                                <Form.Text id="passwordHelpBlock" className={"form-password-conf"} muted>
+                                    {this.state.errors.passwordConf}
+                                </Form.Text>
+                            ) : null}
 
                             {this.state.errors.others !== "" ? (
-                                <Alert variant="danger">
+                                <Alert variant="danger" className={"mt-2"}>
                                     {this.state.errors.others}
                                 </Alert>
                             ) : null}
 
-                            <Button className="register-button btn-connect mr-3" href="/"
+                            <Button className="register-button btn-connect mr-3 mt-3" href="/"
                                     variant="outline-primary"><FaChevronLeft/> Connexion</Button>
 
-                            <Button className="register-button mr-3" variant="primary" style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
+                            <Button className="register-button mr-3 mt-3" variant="primary"
+                                    style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                     onClick={() => this._handleRegister()}>S'inscrire</Button>
                         </Form>
-                        <Card.Footer className="text-muted card-foot">par <a
+                        <Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className='infomaniak-link'>Infomaniak</a></Card.Footer>
                     </Card.Body>
                 </Card>

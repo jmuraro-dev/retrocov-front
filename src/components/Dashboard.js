@@ -100,8 +100,9 @@ class Dashboard extends Component {
                                     Télécharger le QR Code
                                 </Button>
                             </Card.Text>
-                            <Card.Footer className="text-muted card-foot">par <a
+                            <Card.Footer className="text-muted card-foot">validé par <a
                                 href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
+
                         </Card.Body>
                     </Card>
                 </Container>
