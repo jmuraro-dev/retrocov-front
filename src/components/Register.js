@@ -15,6 +15,7 @@ class Register extends Component {
 
         this.state = {
             name: '',
+            email: '',
             address: '',
             password: '',
             passwordConf: '',
@@ -22,8 +23,10 @@ class Register extends Component {
             passwordConfVisible: false,
             errors: {
                 name: '',
+                email: '',
                 password: '',
                 passwordConf: '',
+                condition: '',
                 others: ''
             }
         }
@@ -61,6 +64,10 @@ class Register extends Component {
         let errors = this.state.errors;
 
         switch (name) {
+            case 'email':
+                const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+                errors.email = expression.test(String(value).toLowerCase()) ? '' : "Le format de l'adresse mail indiquer n'est pas valide !"
+                break;
             case 'password':
                 errors.password = value.length < 8 ? "Le mot de passe doit faire 8 caractères minimum !" : ''
                 break;
@@ -80,24 +87,29 @@ class Register extends Component {
     }
 
     _handleRegister = async () => {
-        const {name, address, password, passwordConf, errors} = this.state
+        const {name, email, address, password, passwordConf, errors} = this.state
 
         if (document.getElementById('condition').checked) {
-            if (name === '' || address === '' || password === '' || passwordConf === '') {
+            errors.condition = ''
+            this.setState({errors})
+
+            if (name === '' || email === '' || address === '' || password === '' || passwordConf === '') {
                 errors.others = 'Tous les champs doivent être rempli !'
                 this.setState({errors})
             } else {
-                if (password !== passwordConf) {
-                    this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
-                } else {
-                    this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
-                    const response = await create(this.state)
-                    sessionStorage.setItem('restaurant', response.urlName)
-                    this._updateLogged()
+                if (errors.others ==='' && errors.email === '' && errors.password === '' && errors.passwordConf === '') {
+                    if (password !== passwordConf) {
+                        this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
+                    } else {
+                        this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
+                        const response = await create(this.state)
+                        sessionStorage.setItem('restaurant', response.urlName)
+                        this._updateLogged()
+                    }
                 }
             }
         } else {
-            errors.others = 'Vous devez lire et accepter les conditions pour créer un établissement.'
+            errors.condition = 'Vous devez lire et accepter les conditions pour créer un établissement.'
             this.setState({errors})
         }
     }
@@ -124,6 +136,22 @@ class Register extends Component {
                                 <Alert variant="danger">
                                     {this.state.errors.name}
                                 </Alert>
+                            ) : null}
+
+                            <Form.Group controlId="formBasicName">
+                                <Form.Control
+                                    size="lg"
+                                    name="email"
+                                    type="text"
+                                    value={this.state.email}
+                                    onChange={this._handleChange}
+                                    placeholder="Email de l'établissement"/>
+                            </Form.Group>
+
+                            {this.state.errors.email !== "" ? (
+                                <Form.Text id="passwordHelpBlock" className={"form-password-conf mb-3"} muted>
+                                    {this.state.errors.email}
+                                </Form.Text>
                             ) : null}
 
                             <Form.Group controlId="formBasicAddress">
@@ -184,6 +212,11 @@ class Register extends Component {
                             {this.state.errors.others !== "" ? (
                                 <Alert variant="danger" className={"mt-2"}>
                                     {this.state.errors.others}
+                                </Alert>
+                            ) : null}
+                            {this.state.errors.condition !== "" ? (
+                                <Alert variant="danger" className={"mt-2"}>
+                                    {this.state.errors.condition}
                                 </Alert>
                             ) : null}
 

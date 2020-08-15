@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button} from 'react-bootstrap';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {deleteRestaurantById} from "../api/Restaurant";
 
 const ConditionModal = (props) => {
     const {
@@ -11,14 +10,6 @@ const ConditionModal = (props) => {
     const [modal, setModal] = useState(false);
 
     const toggle = () => setModal(!modal);
-
-    const deleteRestaurant = () => {
-        deleteRestaurantById(props.restaurantId)
-            .then(response => {
-                console.log(response);
-                window.location.reload();
-            })
-    }
 
     return (
         <div style={{display: "inline-block"}}>

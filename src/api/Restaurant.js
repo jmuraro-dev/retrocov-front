@@ -11,6 +11,7 @@ export async function create(restaurant) {
         },
         body: JSON.stringify({
             name: restaurant.name,
+            email: restaurant.email,
             address: restaurant.address,
             password: password,
             urlName: createUrlName(restaurant.name)

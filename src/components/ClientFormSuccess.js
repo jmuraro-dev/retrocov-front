@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import '../styles/register.css';
 import '../styles/success.css';
-import {Alert, Button, Card, Container, Form, Spinner} from 'react-bootstrap';
+import {Card, Container, Spinner} from 'react-bootstrap';
 
 class ClientFormSuccess extends Component {
     constructor(props) {
