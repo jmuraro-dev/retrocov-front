@@ -7,6 +7,7 @@ import {Alert, Button, Card, Container, Form, InputGroup} from 'react-bootstrap'
 import {FaChevronLeft} from "react-icons/fa";
 import {create} from "../api/Restaurant";
 import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
+import ConditionModal from "./ConditionModal";
 
 class Register extends Component {
     constructor(props) {
@@ -81,18 +82,23 @@ class Register extends Component {
     _handleRegister = async () => {
         const {name, address, password, passwordConf, errors} = this.state
 
-        if (name === '' || address === '' || password === '' || passwordConf === '') {
-            errors.others = 'Tous les champs doivent être rempli !'
-            this.setState({errors})
-        } else {
-            if (password !== passwordConf) {
-                this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
+        if (document.getElementById('condition').checked) {
+            if (name === '' || address === '' || password === '' || passwordConf === '') {
+                errors.others = 'Tous les champs doivent être rempli !'
+                this.setState({errors})
             } else {
-                this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
-                const response = await create(this.state)
-                sessionStorage.setItem('restaurant', response.urlName)
-                this._updateLogged()
+                if (password !== passwordConf) {
+                    this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
+                } else {
+                    this.setState({errors: {name: '', password: '', passwordConf: '', others: ''}})
+                    const response = await create(this.state)
+                    sessionStorage.setItem('restaurant', response.urlName)
+                    this._updateLogged()
+                }
             }
+        } else {
+            errors.others = 'Vous devez lire et accepter les conditions pour créer un établissement.'
+            this.setState({errors})
         }
     }
 
@@ -170,6 +176,10 @@ class Register extends Component {
                                     {this.state.errors.passwordConf}
                                 </Form.Text>
                             ) : null}
+
+                            <Form.Group controlId="formBasicCheckbox" style={{marginBottom: 0}}>
+                                <Form.Check type="checkbox" id="condition" label={<ConditionModal />} style={{marginTop: 20, paddingLeft: 0}} />
+                            </Form.Group>
 
                             {this.state.errors.others !== "" ? (
                                 <Alert variant="danger" className={"mt-2"}>
