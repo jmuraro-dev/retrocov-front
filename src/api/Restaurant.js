@@ -80,6 +80,9 @@ export async function readByEmail(email) {
 
     try {
         const response = await fetch(config.API_URL + 'restaurant/read_by_email.php?email=' + email, init)
+        if (response.status === 404) {
+            return false;
+        }
         const json = await response.json()
         return json
     } catch(err) {
@@ -162,7 +165,26 @@ export async function updateToken(id) {
         const json = await response.json();
         return json
     } catch (err) {
-        console.log('Fetch Error Login ------', err)
+        console.log('Fetch Error updateToken ------', err)
+        return null
+    }
+}
+
+export async function sendMail(email, token) {
+    var init = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/forgot_password.php?email=' + email + '&token=' + token, init)
+        if (response.status === 200) { return true }
+        const json = await response.json();
+        return json
+    } catch (err) {
+        console.log('Fetch Error sendMail ------', err)
         return null
     }
 }

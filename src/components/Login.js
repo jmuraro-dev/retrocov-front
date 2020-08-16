@@ -8,6 +8,7 @@ import {Alert, Button, Card, Container, Form, InputGroup} from "react-bootstrap"
 import {FaChevronRight} from "react-icons/fa";
 import {login} from "../api/Restaurant";
 import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 class Login extends Component {
     constructor(props) {
@@ -113,13 +114,18 @@ class Login extends Component {
                                 </Alert>
                             ) : null}
 
-                            <Button className="mr-3 mt-2" variant="primary"
-                                    style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
-                                    onClick={() => this._handleLogin()}>
-                                Se connecter
-                            </Button>
-                            <Button className="mr-3 mt-2 btn-connect" href="/register"
-                                    variant="outline-primary">Inscription <FaChevronRight/></Button>
+                            <Form.Group style={{marginTop: 20}} controlId="formBasicName">
+                                <Form.Text style={{marginBottom: -10}}>
+                                    <ForgotPasswordModal />
+                                </Form.Text>
+                                <Button className="mr-3 mt-2" variant="primary"
+                                        style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
+                                        onClick={() => this._handleLogin()}>
+                                    Se connecter
+                                </Button>
+                                <Button className="mr-3 mt-2 btn-connect" href="/register"
+                                        variant="outline-primary">Inscription <FaChevronRight/></Button>
+                            </Form.Group>
                         </Form>
                         <Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
