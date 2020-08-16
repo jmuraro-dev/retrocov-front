@@ -7,9 +7,10 @@ import {
 import '../styles/register.css';
 import {Alert, Button, Card, Container, Form, InputGroup, Spinner} from 'react-bootstrap';
 import {create} from "../api/ClientTrace";
-import {readByEmail, updateToken} from "../api/Restaurant";
+import {readByEmail, updateToken, updatePassword} from "../api/Restaurant";
 import ConditionModal from "./ConditionModal";
 import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
+import {FaChevronLeft} from "react-icons/fa";
 
 class PasswordChangeForm extends Component {
     constructor(props) {
@@ -107,17 +108,20 @@ class PasswordChangeForm extends Component {
             errors.others = 'Tous les champs doivent être rempli !'
             this.setState({errors})
         } else {
-            if (errors.others === '' && errors.newPassword === '' && errors.newPasswordConf === '') {
+            if (errors.newPassword === '' && errors.newPasswordConf === '') {
                 if (newPassword !== newPasswordConf) {
                     this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
                 } else {
                     this.setState({errors: {newPassword: '', newPasswordConf: '', others: ''}})
                     //SUCCESS !
-                    console.log("rgtrhtr");
-                    updateToken(5)
-                        .then((result) => {
-                            console.log(result);
-                        });
+                    updatePassword(this.state.restaurantId, this.props.token, this.state.newPassword)
+                        .then(() => {
+                            updateToken(this.state.restaurantId)
+                                .then(() => {
+                                    this.setState({success: true});
+                                })
+                        })
+
                 }
             }
         }
@@ -199,10 +203,20 @@ class PasswordChangeForm extends Component {
                                     </Alert>
                                 ) : null}
 
+                                {this.state.success ? (
+                                        <>
+                                            <Alert variant="success" className={"mt-2"}>
+                                                Votre mot de passe a bien été modifié.
+                                            </Alert>
+                                            <Button className="register-button btn-connect mr-3 mt-3" href="/"
+                                                    variant="outline-primary"><FaChevronLeft/> Retour</Button>
+                                        </>
 
-                                <Button className="register-button mr-3 mt-3" variant="primary"
-                                        style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
-                                        onClick={() => this._handleSubmit()}>Soumettre</Button>
+                                    ) :
+                                    <Button className="register-button mr-3 mt-3" variant="primary"
+                                            style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
+                                            onClick={() => this._handleSubmit()}>Soumettre</Button>}
+
                             </Form>
                             <Card.Footer className="text-muted card-foot">validé par <a
                                 href={"https://www.infomaniak.com"}
