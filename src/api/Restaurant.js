@@ -70,6 +70,24 @@ export async function readByUrlName(urlName) {
     }
 }
 
+export async function readByEmail(email) {
+    var init = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/read_by_email.php?email=' + email, init)
+        const json = await response.json()
+        return json
+    } catch(err) {
+        console.log('Fetch Error readByEmail ------', err)
+        return null
+    }
+}
+
 function createUrlName(restaurantName) {
     var r = restaurantName.toLowerCase();
     r = r.replace(new RegExp(/\s/g),"");
@@ -119,6 +137,53 @@ export async function deleteRestaurantById(id) {
 
     try {
         const response = await fetch(config.API_URL + 'restaurant/delete.php', init)
+        const json = await response.json();
+        return json
+    } catch (err) {
+        console.log('Fetch Error Login ------', err)
+        return null
+    }
+}
+
+export async function updateToken(id) {
+
+    var init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/update_token.php', init)
+        const json = await response.json();
+        return json
+    } catch (err) {
+        console.log('Fetch Error Login ------', err)
+        return null
+    }
+}
+
+
+export async function updatePassword(restaurant) {
+    var password = sha1(sha1('Cov-' + restaurant.password) + '_Retro')
+
+    var init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({
+            name: restaurant.name,
+            password: password
+        })
+    }
+
+    try {
+        const response = await fetch(config.API_URL + 'restaurant/login.php', init)
         const json = await response.json();
         return json
     } catch (err) {

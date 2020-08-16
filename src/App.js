@@ -17,6 +17,7 @@ import ClientForm from "./components/ClientForm";
 import ClientFormSuccess from "./components/ClientFormSuccess";
 import Error404 from "./components/Error404";
 import DashboardAdmin from "./components/DashboardAdmin";
+import PasswordChangeForm from "./components/PasswordChangeForm";
 
 class App extends Component {
     constructor(props) {
@@ -76,6 +77,9 @@ class App extends Component {
                     )} />
                     <Route path="/:restaurant/success">
                         <ClientFormSuccess />
+                    </Route>
+                    <Route path="/changepassword/:email/:token">
+                        <PasswordChangeForm />
                     </Route>
                     <Route path="/404">
                         <Error404 />
