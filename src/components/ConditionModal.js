@@ -24,7 +24,7 @@ const ConditionModal = (props) => {
                         clients dans la cadres des consignes de Office Fédérale de la Santé Publique Suisse.
                     </p>
                     <p className={"condition-p"}>
-                        <b>Article 1.</b> RetroCov n’est en aucun responsable de l’exactitude des données renseignées
+                        <b>Article 1.</b> RetroCov n’est en aucun cas responsable de l’exactitude des données renseignées
                         par les clients des établissements.
                     </p>
                     <p className={"condition-p"}>
@@ -43,7 +43,7 @@ const ConditionModal = (props) => {
                         sans copie de sauvegarde.
                     </p>
                     <p className={"condition-p"}>
-                        <b>Article 5.</b> RetroCov héberge les données usagers et clients sur les serveurs d’infomaniak
+                        <b>Article 5.</b> RetroCov héberge les données usagers et clients sur les serveurs d’Infomaniak
                         et la responsabilité de RetroCov se limite à celle d’un usager usuel de services
                         d’hébergements informatiques.
                     </p>
