@@ -97,7 +97,7 @@ class Register extends Component {
                 errors.others = 'Tous les champs doivent être rempli !'
                 this.setState({errors})
             } else {
-                if (errors.others ==='' && errors.email === '' && errors.password === '' && errors.passwordConf === '') {
+                if (errors.others === '' && errors.email === '' && errors.password === '' && errors.passwordConf === '') {
                     if (password !== passwordConf) {
                         this.setState({error: 'Les deux mots de passe ne correspondent pas !'})
                     } else {
@@ -205,9 +205,8 @@ class Register extends Component {
                                 </Form.Text>
                             ) : null}
 
-                            <Form.Group controlId="formBasicCheckbox" style={{marginBottom: 0}}>
-                                <Form.Check type="checkbox" id="condition" label={<ConditionModal />} style={{marginTop: 20, paddingLeft: 0}} />
-                            </Form.Group>
+                            <Form.Check type="checkbox" id="condition" label={<ConditionModal/>}
+                                        style={{marginTop: 20, paddingLeft: 20}}/>
 
                             {this.state.errors.others !== "" ? (
                                 <Alert variant="danger" className={"mt-2"}>
