@@ -127,8 +127,8 @@ class Login extends Component {
                                         variant="outline-primary">Inscription <FaChevronRight/></Button>
                             </Form.Group>
                         </Form>
-                        <Card.Footer className="text-muted card-foot">validé par <a
-                            href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
+                        {/*<Card.Footer className="text-muted card-foot">validé par <a
+                            href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>*/}
                     </Card.Body>
                 </Card>
             </Container>

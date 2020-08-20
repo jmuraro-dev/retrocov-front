@@ -90,7 +90,7 @@ class Dashboard extends Component {
                         </Navbar.Collapse>
                     </Navbar>
                     <Card className={"login-card text-center"}>
-                        <Card.Body style={{paddingBottom: "0px"}}>
+                        <Card.Body /*style={{paddingBottom: "0px"}}*/>
                             <Card.Title className={"mb-4"}><h3>{this.state.name}</h3></Card.Title>
                             <Card.Text>
                                 <QRCode id="qrcode" value={"https://www.retrocov.ch/" + this.state.urlName}/>
@@ -100,9 +100,11 @@ class Dashboard extends Component {
                                     Télécharger le QR Code
                                 </Button>
                             </Card.Text>
-                            <Card.Footer className="text-muted card-foot">validé par <a
-                                href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>
-
+                            <Card.Text>
+                                <small className="text-muted">Pour demander un export de la liste de vos clients,  envoyer un mail à <a href="mailto:infos@retrocov.ch">infos@retrocov.ch</a></small>
+                            </Card.Text>
+                            {/*<Card.Footer className="text-muted card-foot">validé par <a
+                                href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>*/}
                         </Card.Body>
                     </Card>
                 </Container>

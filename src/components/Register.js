@@ -120,7 +120,7 @@ class Register extends Component {
                 <Card className={"register-card text-center"}>
                     <Card.Img className={"card-logo"} variant={"top"}
                               src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
-                    <Card.Body style={{paddingBottom: "0px"}}>
+                    <Card.Body /*style={{paddingBottom: "0px"}}*/>
                         <Card.Title className={"mb-4"}><h3>Inscription</h3></Card.Title>
                         <Form>
                             <Form.Group controlId="formBasicName">
@@ -227,8 +227,8 @@ class Register extends Component {
                                     style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
                                     onClick={() => this._handleRegister()}>S'inscrire</Button>
                         </Form>
-                        <Card.Footer className="text-muted card-foot">validé par <a
-                            href={"https://www.infomaniak.com"} className='infomaniak-link'>Infomaniak</a></Card.Footer>
+                        {/*<Card.Footer className="text-muted card-foot">validé par <a
+                            href={"https://www.infomaniak.com"} className='infomaniak-link'>Infomaniak</a></Card.Footer>*/}
                     </Card.Body>
                 </Card>
             </Container>

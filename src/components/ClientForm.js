@@ -114,7 +114,7 @@ class ClientForm extends Component {
                     <Card className={"register-card text-center clientform-card"}>
                         <Card.Img className={"card-logo"} variant={"top"}
                                   src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
-                        <Card.Body style={{paddingBottom: "0px"}}>
+                        <Card.Body /*style={{paddingBottom: "0px"}}*/>
                             <Card.Title className={"mb-4 clientform-title"}><h3>Formulaire Client - {this.state.restaurantName}</h3>
                             </Card.Title>
                             <Alert variant="info" style={{fontSize: "9pt"}}>
@@ -200,8 +200,8 @@ class ClientForm extends Component {
                                 }
 
                             </Form>
-                            <Card.Footer className="text-muted card-foot">validé par <a
-                                href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>
+                            {/*<Card.Footer className="text-muted card-foot">validé par <a
+                                href={"https://www.infomaniak.com"}>Infomaniak</a></Card.Footer>*/}
                         </Card.Body>
                     </Card>
                 </Container>
