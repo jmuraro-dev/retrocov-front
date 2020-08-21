@@ -28,20 +28,20 @@
     border-top: 1px solid rgba(0, 0, 0, 0.125) ;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 650px) {
     .login-card {
         width: 75%;
         min-width: 300px;
-        margin: 0;
+        margin-top: 30%;
         position: relative;
-        top: 70%;
+        top: 50%;
         left: 50%;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 650px) {
     .login-card {
         width: 75%;
         min-width: 300px;
