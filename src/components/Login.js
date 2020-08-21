@@ -33,7 +33,7 @@ class Login extends Component {
     }
 
     _handlePasswordVisible = () => {
-        this.setState({passwordVisible : !this.state.passwordVisible})
+        this.setState({passwordVisible: !this.state.passwordVisible})
     }
 
     _handleKeyDown = (event) => {
@@ -102,7 +102,8 @@ class Login extends Component {
                                     onChange={this._handleChange}
                                     placeholder="Mot de passe"/>
                                 <InputGroup.Prepend>
-                                    <InputGroup.Text onClick={() => this._handlePasswordVisible()} style={{padding:"10px"}}>
+                                    <InputGroup.Text onClick={() => this._handlePasswordVisible()}
+                                                     style={{padding: "10px"}}>
                                         {this.state.passwordVisible ? <AiOutlineEyeInvisible/> : <AiOutlineEye/>}
                                     </InputGroup.Text>
                                 </InputGroup.Prepend>
@@ -116,7 +117,7 @@ class Login extends Component {
 
                             <Form.Group style={{marginTop: 20}} controlId="formBasicName">
                                 <Form.Text style={{marginBottom: -10}}>
-                                    <ForgotPasswordModal />
+                                    <ForgotPasswordModal/>
                                 </Form.Text>
                                 <Button className="mr-3 mt-2" variant="primary"
                                         style={{backgroundColor: "#1A98FF", borderColor: "#1A98FF"}}
@@ -129,6 +130,7 @@ class Login extends Component {
                         </Form>
                         {/*<Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>*/}
+                        {/*
                         <Card className={"definition-card text-center  mt-3"}>
                             <Card.Body style={{paddingBottom: "0px"}}>
                                 <Card.Title className={"mb-4"}><h5>Qu'est ce que RetroCov ?</h5></Card.Title>
@@ -141,6 +143,7 @@ class Login extends Component {
                                 </Card.Text>
                             </Card.Body>
                         </Card>
+                        */}
                     </Card.Body>
                 </Card>
             </Container>
