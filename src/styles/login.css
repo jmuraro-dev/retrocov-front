@@ -6,17 +6,6 @@
     background-position: center;
 }
 
-.login-card {
-    width: 75%;
-    min-width: 300px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
 .login-card-text {
     background-color: white;
     text-align: right;
@@ -33,3 +22,35 @@
     border-color: #1A98FF!important;
     color: white!important;
 }
+
+.definition-card {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.125) ;
+}
+
+@media (max-width: 500px) {
+    .login-card {
+        width: 75%;
+        min-width: 300px;
+        margin: 0;
+        position: relative;
+        top: 70%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-width: 500px) {
+    .login-card {
+        width: 75%;
+        min-width: 300px;
+        margin: 0;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}
+

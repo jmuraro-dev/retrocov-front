@@ -78,7 +78,7 @@ class Login extends Component {
     render() {
         return (
             <Container className="login-container">
-                <Card className={"login-card text-center"}>
+                <Card className={"login-card text-center mb-3"}>
                     <Card.Img className={"card-logo"} variant={"top"}
                               src={window.location.origin.toString() + '/RetroCov_Logo.png'} alt="RetroCov Logo"/>
                     <Card.Body style={{paddingBottom: "0px"}}>
@@ -130,6 +130,17 @@ class Login extends Component {
                         {/*<Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>*/}
                     </Card.Body>
+                    <Card className={"definition-card text-center  mt-3"}>
+                        <Card.Body style={{paddingBottom: "0px"}}>
+                            <Card.Title className={"mb-4"}><h5>Qu'est ce que RetroCov ?</h5></Card.Title>
+                            <Card.Text className={"pb-4 text-justify"}>
+                                <p>RetroCov, pour Retrospective Covid, est une application permettant le traçage momentané de la clientèle d'un restaurant, à l'identique d'une liste papier dématérialisée, à l'aide d'un QR code propre à l'établissement.</p>
+
+                                <p>Lors de son inscription à RetroCov, l'établissement recoit un QR code afin de l'afficher dans sa surface et, à l'aide de son smartphone, le client scan le QR code pour s'inscrire dans l'établissement en quelques secondes.</p>
+
+                                <p>Les données seront conservées durant le délai de garde ordonné par l'OFSP et, pour en recevoir le récapitulatif, le commerce doit s'adresser par email à RetroCov, cela avec les justificatifs mentionnés dans les conditions générales.</p></Card.Text>
+                        </Card.Body>
+                    </Card>
                 </Card>
             </Container>
         );
