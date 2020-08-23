@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import '../styles/login.css';
 import '../styles/general.css';
 
-import {Alert, Button, Card, Container, Form, InputGroup} from "react-bootstrap";
+import {Alert, Button, Card, CardGroup, Container, Form, InputGroup} from "react-bootstrap";
 
 import {FaChevronRight} from "react-icons/fa";
 import {login} from "../api/Restaurant";
@@ -130,7 +130,7 @@ class Login extends Component {
                         </Form>
                         {/*<Card.Footer className="text-muted card-foot">validé par <a
                             href={"https://www.infomaniak.com"} className="infomaniak-link">Infomaniak</a></Card.Footer>*/}
-                        {/*
+
                         <Card className={"definition-card text-center  mt-3"}>
                             <Card.Body style={{paddingBottom: "0px"}}>
                                 <Card.Title className={"mb-4"}><h5>Qu'est ce que RetroCov ?</h5></Card.Title>
@@ -143,7 +143,7 @@ class Login extends Component {
                                 </Card.Text>
                             </Card.Body>
                         </Card>
-                        */}
+
                     </Card.Body>
                 </Card>
             </Container>
